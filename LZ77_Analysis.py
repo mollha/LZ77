@@ -10,10 +10,18 @@ import bitarray
 
 with open('Input/short_example', 'rb') as file:
     myfile = file.read()
+    print(len(myfile))
+    ba = bitarray.bitarray(endian="little")
+    ba.frombytes(myfile)
+    print(ba.length())
+    print(ba[0:8].tobytes())
+    print(type(ba))
 
 print(type(myfile))
 
 
 encoded_version = encoder(500, 500, myfile)
-print(encoded_version.decode('ascii'))
+len(encoded_version)
+print(len(encoded_version))
+print(len('abracdabra'))
 

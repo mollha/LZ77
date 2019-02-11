@@ -1,4 +1,4 @@
-import math
+import bitarray
 
 def encoder(window_size, buffer_size, input_file):
     # takes BYTES object as input
@@ -8,7 +8,7 @@ def encoder(window_size, buffer_size, input_file):
     coding_position = 0
     window_index = 0
     input_length = len(input_file)
-    encoded_string = b''
+    encoded_string = bitarray.bitarray(endian="little")
 
     # while the cursor position is still within the string, continue encoding
     while coding_position < input_length:
@@ -20,7 +20,7 @@ def encoder(window_size, buffer_size, input_file):
         # characters does not appear in the sliding window.
         while coding_position + buffer_index < input_length and buffer_index <= buffer_size:
             # buffer_string += input_file[coding_position + buffer_index].to_bytes(3, byteorder='big')
-            buffer_string += bytes(str(input_file[coding_position + buffer_index]), "ascii")
+            buffer_string += bytes(str(input_file[coding_position + buffer_index]).zfill(3), "ascii")
             new_last_occurrence = input_file.rfind(buffer_string, coding_position - window_index, coding_position)
             if new_last_occurrence == -1:
                 break
@@ -40,13 +40,13 @@ def encoder(window_size, buffer_size, input_file):
         # creates 3-tuple, increments the coding position and increases the window size if possible
         coding_position += buffer_index+1
         window_index = min(window_size, coding_position)
+        encoded_string += bytes(str(coding_position-last_occurrence).zfill(3), "ascii")
         print(encoded_string)
-        encoded_string += bytes(str(coding_position-last_occurrence), "ascii")
-        print(encoded_string)
-        encoded_string += bytes(str(buffer_index), "ascii")
+        encoded_string += bytes(str(buffer_index).zfill(3), "ascii")
         # encoded_string += buffer_index.to_bytes(math.ceil(math.log2(buffer_size)), byteorder='big')
         print(encoded_string)
-        encoded_string += bytes(str(next_char), "ascii")
+        print('yes')
+        encoded_string += bytes(str(next_char).zfill(3), "ascii")
         print(encoded_string)
     return encoded_string
 

@@ -3,10 +3,10 @@ import bitarray
 
 
 def encoder(window_size, buffer_size, input_file):
-    print(input_file.tostring())
-    input_file = str(input_file)[10:-2]
+    input_file = input_file.decode()
     pointer_size = math.ceil(math.log2(window_size + 1))
     reference_size = math.ceil(math.log2(buffer_size + 1))
+    print('amount ' + str(pointer_size + reference_size + 8))
 
     # takes bitarray object as input
     # input file is in bytes
@@ -40,25 +40,21 @@ def encoder(window_size, buffer_size, input_file):
 
         # sets the character that signifies EOF (end of file), otherwise finds the next character in the input
         if coding_position + buffer_index == input_length:
-            next_char = '0'
+            next_char = ' '
         else:
             next_char = buffer_string[-1]
 
         # creates 3-tuple, increments the coding position and increases the window size if possible
-        coding_position += buffer_index+1
-        window_index = min(window_size, coding_position)
-        print(encoded_string)
         encoded_string += bin((coding_position - last_occurrence))[2:].zfill(pointer_size)
-        print(encoded_string)
         encoded_string += bin(buffer_index)[2:].zfill(reference_size)
         # encoded_string += buffer_index.to_bytes(math.ceil(math.log2(buffer_size)), byteorder='big')
-        print(encoded_string)
-        encoded_string += bin(int(next_char))[2:].zfill(8)
-        print(encoded_string)
+        encoded_string += bin(ord(next_char))[2:].zfill(8)
+        coding_position += buffer_index + 1
+        window_index = min(window_size, coding_position)
     return bitarray.bitarray(encoded_string, endian="little")
 
 
-def decoder(input_list):
+def decoder(window_size, buffer_size, input_list):
     decoded_string = ''
     decoded_string_length = 0
 

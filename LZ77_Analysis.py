@@ -19,7 +19,7 @@ with open('Input/long_example', 'rb') as file:
 print(type(myfile))
 
 
-encoded_version = encoder(193, 193, ba)
+encoded_version = encoder(193, 193, myfile)
 len(encoded_version)
 print('encoded length '+str(len(encoded_version)))
 print(len('abracdabra'))

@@ -1,4 +1,4 @@
-from LZ77 import encoder
+from LZ77 import encoder, decoder
 import bitarray
 
 # string = 'string'
@@ -8,19 +8,19 @@ import bitarray
 # print(type(encoded_string))
 # print(encoded_string.decode())
 
-with open('Input/long_example', 'rb') as file:
+with open('Input/greymickey.bmp', 'rb') as file:
     myfile = file.read()
+    window = len(myfile)
     print(len(myfile))
     ba = bitarray.bitarray(endian="little")
     ba.frombytes(myfile)
     print(ba.length())
-    print(type(ba))
+    encoded_version = encoder(window, window, myfile)
+    len(encoded_version)
+    print('encoded length '+str(len(encoded_version)))
+    decoded_version = decoder(window, window, encoded_version)
 
-print(type(myfile))
 
+    #turn image files back to files??
 
-encoded_version = encoder(193, 193, myfile)
-len(encoded_version)
-print('encoded length '+str(len(encoded_version)))
-print(len('abracdabra'))
 

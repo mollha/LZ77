@@ -3,6 +3,13 @@ import bitarray
 
 
 def encoder(window_size, buffer_size, input_file):
+    if not isinstance(window_size, int):
+        raise TypeError("window_size must be of type 'int'")
+    if not isinstance(buffer_size, int):
+        raise TypeError("buffer_size must be of type 'int'")
+    if not isinstance(input_file, bytes):
+        raise TypeError("input_file must be of type 'bytes'")
+
     pointer_size = math.ceil(math.log2(window_size + 1))
     reference_size = math.ceil(math.log2(buffer_size + 1))
 
@@ -48,6 +55,15 @@ def encoder(window_size, buffer_size, input_file):
 
 
 def decoder(window_size, buffer_size, input_bit_array):
+    if not isinstance(window_size, int):
+        raise TypeError("window_size must be of type 'int'")
+    if not isinstance(buffer_size, int):
+        raise TypeError("buffer_size must be of type 'int'")
+    try:
+        input_bit_array.to01()
+    except Exception:
+        raise TypeError("input_bit_array must be of type 'bitarray'")
+
     input_length = len(input_bit_array)
     decoded_string = b''
     decoded_string_length = 0

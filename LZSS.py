@@ -10,8 +10,9 @@ def encoder(window_size, buffer_size, input_file):
     if not isinstance(input_file, bytes):
         raise TypeError("input_file must be of type 'bytes'")
 
-    pointer_size = math.ceil(math.log2(window_size + 1))
-    reference_size = math.ceil(math.log2(buffer_size + 1))
+    minimum_match = 2
+    pointer_size = math.ceil(math.log2(window_size))
+    reference_size = math.ceil(math.log2(buffer_size - minimum_match + 1))
 
     # takes bit array object as input
     # input file is in bytes
@@ -69,8 +70,9 @@ def decoder(window_size, buffer_size, input_bit_array):
     decoded_string_length = 0
     s_length = 0
 
-    p_size = math.ceil(math.log2(window_size + 1))
-    r_size = math.ceil(math.log2(buffer_size + 1))
+    minimum_match = 2
+    p_size = math.ceil(math.log2(window_size))
+    r_size = math.ceil(math.log2(buffer_size - minimum_match + 1))
 
     while s_length < input_length:
         bit_flag = int(input_bit_array[s_length: s_length + 1].to01(), 2)

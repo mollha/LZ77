@@ -79,11 +79,13 @@ def window_percentages(max__window_size, input_file):
         general_analysis(window_size, window_size, input_file)
 
 
-with open('Input/short_example', 'rb') as file:
+with open('Input/pantoum5', 'rb') as file:
     myfile = file.read()
     window = len(myfile)
+    print(window*8)
     # window_percentages(window, myfile)
     # general_analysis(500, 500, myfile)
     encoded = encoder(window, window, myfile)
+    print(window*8 / len(encoded))
     print(decoder(window, window, encoded))
 

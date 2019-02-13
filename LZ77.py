@@ -80,13 +80,16 @@ def decoder(window_size, buffer_size, input_bit_array):
 
     # while the current position in the input bit array is less than the total length of the input, continue decoding
     while s_length < input_length:
+        # convert the chunk of bits into bytes (separate the triple into its constituents)
         pointer = int(input_bit_array[s_length: s_length + p_size].to01(), 2)
         reference_length = int(input_bit_array[s_length + p_size: s_length + p_size + r_size].to01(), 2)
         next_char = input_bit_array[s_length + p_size + r_size: s_length + p_size + r_size + 8].tobytes()
 
+        # locate, copy and re-append the reference
         last_occurrence = decoded_string_length - pointer
         decoded_string += decoded_string[last_occurrence:last_occurrence+reference_length] + next_char
 
+        # increase the length of the string by the number of bits added
         decoded_string_length += reference_length + 1
         s_length += 8 + p_size + r_size
     return decoded_string

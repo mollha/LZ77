@@ -44,7 +44,7 @@ def encoder(window_size, buffer_size, input_file):
 
         # sets the character that signifies EOF (end of file), otherwise finds the next character in the input
         if coding_position + buffer_index == input_length:
-            next_char = '-'
+            next_char = ' '
         else:
             next_char = buffer_string[-1].to_bytes(length=1, byteorder="big")
 

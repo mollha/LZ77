@@ -65,7 +65,7 @@ with open('Input/Images/flower.bmp', 'rb') as file:
     # window_percentages(window, myfile)
     for percentage in range(10, 9, -1):
         percentage = percentage / 10
-        encoded = encoder(int(percentage*window), int(percentage*window), myfile)
+        encoded = encoder(2 ,int(percentage*window), int(percentage*window), myfile)
         print(len(encoded))
         print(str(window*8 / len(encoded)))
 

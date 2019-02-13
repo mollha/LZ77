@@ -57,7 +57,7 @@ def window_percentages(max__window_size, input_file):
         # general_analysis(100, window_size, window_size, max__window_size)
 
 
-with open('Input/short_example', 'rb') as file:
+with open('Input/Images/flower.bmp', 'rb') as file:
     myfile = file.read()
     print(myfile)
     window = len(myfile)
@@ -68,11 +68,8 @@ with open('Input/short_example', 'rb') as file:
         encoded = encoder(int(percentage*window), int(percentage*window), myfile)
         print(len(encoded))
         print(str(window*8 / len(encoded)))
-        print('---------------')
-        decoded = decoder(int(percentage*window), int(percentage*window), encoded)
-        print(decoded.decode())
 
-# with open('output', 'a') as file:
+# with open('output', 'a') as file: 1903608, 2616699
 #     file.write('------ new test ------\n')
 #
 # for length in range(1000, 52001, 1000):
@@ -93,3 +90,7 @@ with open('Input/short_example', 'rb') as file:
 #     print(count)
 #     average_compression_ratio = total_ratio / count
 #     print('average compression ratio '+str(average_compression_ratio))
+
+
+print(len(ascii_string(14).encode()))
+print(len(ab_string(14).encode()))
